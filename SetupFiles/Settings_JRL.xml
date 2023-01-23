@@ -48,26 +48,6 @@
 					<!--Names of frames in which the calculated reactions are expressed, or the keyword 'child' or 'parent' to indicate the joint's 'child' or 'parent' Frame. ground is default. If a Frame named 'child' or 'parent' exists and the keyword 'child' or 'parent' is used, the analysis will use that Frame. The array must either have one entry or the same number of entries as joints specified above. If the array has one entry only, that selection is applied to all chosen joints.-->
 					<express_in_frame> child</express_in_frame>
 				</JointReaction>
-				<MuscleForceDirection name="MuscleForceDirection">
-					<!--Flag (true or false) specifying whether on. True by default.-->
-					<on>true</on>
-					<!--Start time.-->
-					<start_time>0</start_time>
-					<!--End time.-->
-					<end_time>6.0933333300000001</end_time>
-					<!--Specifies how often to store results during a simulation. More specifically, the interval (a positive integer) specifies how many successful integration steps should be taken before results are recorded again.-->
-					<step_interval>1</step_interval>
-					<!--Flag (true or false) indicating whether the results are in degrees or not.-->
-					<in_degrees>true</in_degrees>
-					<!--Flag (true or false)indicating whether the results will be express in the segment local reference systems or not.-->
-					<local_ref_system>true</local_ref_system>
-					<!--Flag (true or false) specifying whether the muscle force directions are desired at the effective muscle attachments.-->
-					<effective_attachments>true</effective_attachments>
-					<!--Flag (true or false)specifying whether a storage file with the position of the muscle attachments will be printed.-->
-					<print_muscle_attachments>true</print_muscle_attachments>
-					<!--Names of the bodies whose attached muscles will be included in the analysis.The key word 'all' indicates all bodies.-->
-					<body_names> femur_l femur_r</body_names>
-				</MuscleForceDirection>
 			</objects>
 			<groups />
 		</AnalysisSet>
