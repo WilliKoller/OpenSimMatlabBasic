@@ -23,9 +23,10 @@ ikTool.run();
 copyfile('_ik_marker_errors.sto', fullfile(outputPath, 'IK_marker_errors.sto'));
 delete('_ik_marker_errors.sto');
 
-copyfile('_ik_model_marker_locations.sto', fullfile(outputPath, 'IK_model_marker_locations.sto'));
-delete('_ik_model_marker_locations.sto');
-
+if isfile('_ik_model_marker_locations.sto')
+    copyfile('_ik_model_marker_locations.sto', fullfile(outputPath, 'IK_model_marker_locations.sto'));
+    delete('_ik_model_marker_locations.sto');
+end
 
 % Check for errors!
 % Add cycle to check!
