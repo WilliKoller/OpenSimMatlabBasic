@@ -16,8 +16,12 @@ clear;
 import org.opensim.modeling.*;
 
 
-setupIKfile = fullfile(pwd,'SetupFiles', 'Settings_IK.xml');
-setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'Settings_IK_reducedTorso.xml');
+% setupIKfile = 'C:\Users\Willi\ucloud\PhD\Study_TorsionToolComparison\Data\SetupFiles\OKS_IK.xml';
+% setupIK_reducedTorso_file = 'C:\Users\Willi\ucloud\PhD\Study_TorsionToolComparison\Data\SetupFiles\OKS_IK.xml';
+% setupIKfile = fullfile(pwd,'SetupFiles', 'climbing_ik.xml');
+% setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'Alex_IK_gait2392_noTorso.xml');
+setupIKfile = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
+setupIK_reducedTorso_file = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
 setupIDfile = fullfile(pwd, 'SetupFiles', 'Settings_ID.xml');
 setupSOfile = fullfile(pwd, 'SetupFiles', 'Settings_SO.xml');
 setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL.xml');
@@ -25,8 +29,8 @@ setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL.xml');
 % Options for steps which should be run
 b_runIK = 1;
 b_runID = 1;
-b_runSO = 1;
-b_runJRL = 1;
+b_runSO = 0;
+b_runJRL = 0;
 
 disp('Select the root output folder');
 rootOutput = uigetdir(pwd, 'Select the root output folder');
@@ -42,7 +46,7 @@ end
 if(~iscell(modelsFileNames))
     modelsFileNames = cellstr(modelsFileNames);
 end
-
+%%
 disp('Select trials to run the pipeline. Files must have been processed with a_process_C3D to create corresponding folder!');
 [trialsFileNames, trialsFolder] = uigetfile('*.c3d', 'Multiselect', 'on', 'Select trials to run the pipeline. Files must have been processed with a_process_C3D to create corresponding folder!');
 if isequal(trialsFileNames, 0)
@@ -76,9 +80,17 @@ for trialIndex = 1 : size(trialsFileNames, 2)
     elseif isfield(cycle, 'right')
         startTime = double(cycle.right.start(1)) / frequency;
         endTime = double(cycle.right.end(end)) / frequency;
+    else
+        startTime = 0;
+        endTime = duration;
     end
     
+    
     preframes = startTime * frequency;
+
+
+    % temporary for Alex
+%     preframes = 100;
 
     startTime = startTime - preframes / frequency;
                 
