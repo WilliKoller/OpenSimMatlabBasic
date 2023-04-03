@@ -16,18 +16,17 @@ clear;
 import org.opensim.modeling.*;
 
 
-% setupIKfile = 'C:\Users\Willi\ucloud\PhD\Study_TorsionToolComparison\Data\SetupFiles\OKS_IK.xml';
-% setupIK_reducedTorso_file = 'C:\Users\Willi\ucloud\PhD\Study_TorsionToolComparison\Data\SetupFiles\OKS_IK.xml';
-% setupIKfile = fullfile(pwd,'SetupFiles', 'climbing_ik.xml');
-% setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'Alex_IK_gait2392_noTorso.xml');
-setupIKfile = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
-setupIK_reducedTorso_file = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
+setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD.xml');
+setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD_reducedTorso.xml');
+% setupIKfile = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
+% setupIK_reducedTorso_file = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
 setupIDfile = fullfile(pwd, 'SetupFiles', 'Settings_ID.xml');
 setupSOfile = fullfile(pwd, 'SetupFiles', 'Settings_SO.xml');
 setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL.xml');
 
 % Options for steps which should be run
 b_runIK = 1;
+b_checkMuscleMomentArms = 1; b_skipTrialIfMomentArmsWrong = 1;
 b_runID = 1;
 b_runSO = 0;
 b_runJRL = 0;
@@ -138,6 +137,14 @@ for trialIndex = 1 : size(trialsFileNames, 2)
                     fileID = fopen(fullfile(rootOutput, modelFileNameNoExt, trialName, 'IK_withTorsoOutOfRecommendation.txt'),'w');
                     fprintf(fileID,'Marker errors with all torso markers higher than recommended! No problem if marker errors without torso are ok.');
                     fclose(fileID);
+                end
+            end
+
+            if b_checkMuscleMomentArms
+                disp('Checking muscle moment arms ... ');
+                momentArmsAreWrong = checkMuscleMomentArms(modelFile, motionFile);
+                if b_skipTrialIfMomentArmsWrong && momentArmsAreWrong
+                    break;
                 end
             end
             
