@@ -143,9 +143,15 @@ for trialIndex = 1 : size(trialsFileNames, 2)
             if b_checkMuscleMomentArms
                 disp('Checking muscle moment arms ... ');
                 momentArmsAreWrong = checkMuscleMomentArms(modelFile, motionFile);
-                if b_skipTrialIfMomentArmsWrong && momentArmsAreWrong
-                    break;
+                if momentArmsAreWrong
+                    fileID = fopen(fullfile(rootOutput, modelFileNameNoExt, trialName, 'MuscleMomentArmsAreWrong.txt'),'w');
+                    fprintf(fileID,'Muscle Moment Arms are wrong! Alter the model and check again!\n');
+                    fclose(fileID);
+                    if b_skipTrialIfMomentArmsWrong
+                        break;
+                    end
                 end
+                
             end
             
             if(b_runID == 1)
