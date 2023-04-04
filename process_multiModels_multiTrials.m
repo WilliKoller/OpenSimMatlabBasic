@@ -84,12 +84,14 @@ for trialIndex = 1 : size(trialsFileNames, 2)
         endTime = duration;
     end
     
-    
     preframes = startTime * frequency;
 
-
-    % temporary for Alex
-%     preframes = 100;
+    % the simulation starts 0.1 seconds prior to first step - this can
+    % cause errors at static optimization for some muscle types -->
+    % try to start simulation earlier (increase preframes)
+    if preframes > 0.1 * frequency
+        preframes = 0.1 * frequency;
+    end
 
     startTime = startTime - preframes / frequency;
                 
@@ -120,7 +122,7 @@ for trialIndex = 1 : size(trialsFileNames, 2)
                 % interesting marker errors for lower legs
 
                 disp('without torso ... ');
-                resultsAreValid = runIK(setupIK_reducedTorso_file, modelFile, trcFile, startTime, endTime, fullfile(outputPath, 'IK_reducedTorsoMarkers'), 1);
+                resultsAreValid = runIK(setupIK_reducedTorso_file, modelFile, trcFile, startTime, endTime, fullfile(outputPath, 'IK_reducedTorsoMarkers'), 1, frequency);
                 if(~resultsAreValid)
                     fprintf(2,'Maker Error too big for inverse Kinematics!\n'); 
 
@@ -132,7 +134,7 @@ for trialIndex = 1 : size(trialsFileNames, 2)
                 % now run the same with more torso markers
                 % This overwrites the output from the previous run
                 disp('and now with torso ... ');
-                resultsAreValid = runIK(setupIKfile, modelFile, trcFile, startTime, endTime, fullfile(outputPath, 'IK'), 0);
+                resultsAreValid = runIK(setupIKfile, modelFile, trcFile, startTime, endTime, fullfile(outputPath, 'IK'), 0, frequency);
                 if(~resultsAreValid)
                     fileID = fopen(fullfile(rootOutput, modelFileNameNoExt, trialName, 'IK_withTorsoOutOfRecommendation.txt'),'w');
                     fprintf(fileID,'Marker errors with all torso markers higher than recommended! No problem if marker errors without torso are ok.');

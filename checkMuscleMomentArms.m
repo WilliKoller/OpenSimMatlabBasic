@@ -128,6 +128,10 @@ title(motionFilename);
 
 if size(discontinuity, 1) > 0
     legend(legArr);
+    
+    ylabel('Muscle Moment Arms with discontinuities (m)');
+    xlabel('Frame (after start time)');
+    drawnow;
     fprintf(2, '\n\nYou should alter the model - most probably you have to reduce the radius of corresponding wrap objects for the identified muscles\n\n\n')
     momentArmsAreWrong = 1;
 else
@@ -138,8 +142,10 @@ end
 
 figure('Units', 'normalized', 'Position', [0.1 0.1 0.8 0.8]);
 plot(flexMomentArms);
-title(motionFilename);
+title(['All muscle moment arms in motion ' motionFilename]);
 legend(muscleNames, 'Interpreter', 'none');
 ylabel('Hip Flexion Moment Arm (m)');
+xlabel('Frame (after start time)');
+drawnow;
 end
 
