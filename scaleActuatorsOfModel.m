@@ -8,17 +8,18 @@ model_mass = osimBaseModel.getTotalMass(state);
 scaled_mass = model_mass;
 % scaled_mass = 75.1646 / 0.545553977461274; % use this when you do not
 % have a torso
-generic_mass = 75.1646;
+% generic_mass = 75.1646; % gait2392
+generic_mass = 75.337; % Lernagopal / Rajagopal
 scale_factor = (scaled_mass / generic_mass) ^ (2 / 3);
-scale_factor = 1;
+% scale_factor = 1;
 
 [~, fileName, ~] = fileparts(modelFileName);
 newModelName = fullfile(path, [fileName '_final.osim']);
 strengthScaler(scale_factor, osimBaseModel, newModelName);
 
 % Adjust Actuators to mass center of pelvis
-% actuatorfile = fullfile(pwd, 'gait2392_SO_Actuators.xml');
-actuatorfile = fullfile(pwd, 'Lernagopal_SO_Actuators.xml');
+% actuatorfile = fullfile(pwd, 'gait2392_SO_Actuators.xml'); % also for Rajagopal
+actuatorfile = fullfile(pwd, 'Lernagopal_SO_Actuators.xml'); % includes knee adduction reserver
 osimModel = Model(newModelName);
 pelvis = osimModel.getBodySet().get("pelvis");
 massCenter = pelvis.getMassCenter();
