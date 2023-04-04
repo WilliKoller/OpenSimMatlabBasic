@@ -8,7 +8,9 @@ if ~exist(outputPath, 'dir')
 end
 
 % load additional libraries if you need them
-% opensimCommon.LoadOpenSimLibrary('C:\OpenSim 4.2\plugins\MuscleForceDirection')
+if contains(lower(setupFile), 'muscledirection')
+    opensimCommon.LoadOpenSimLibrary('C:\OpenSim 4.2\plugins\MuscleForceDirection')
+end
 
 jrlTool = AnalyzeTool(setupFile, false);
 jrlTool.setModelFilename(modelFile);
@@ -28,12 +30,13 @@ joint_reaction.setStartTime(startTime);
 joint_reaction.setEndTime(endTime);
 joint_reaction.setForcesFileName(so_forcesFile);
 
-
 % specify options for other analysis. Should work for almost all Analysis
 % similar to these lines
-% muscle_force_direction = analysisSet.get(1);
-% muscle_force_direction.setStartTime(startTime);
-% muscle_force_direction.setEndTime(endTime);
+if contains(lower(setupFile), 'muscledirection')
+    muscle_force_direction = analysisSet.get(1);
+    muscle_force_direction.setStartTime(startTime);
+    muscle_force_direction.setEndTime(endTime);
+end
 
 jrlTool.print(fullfile(outputPath, 'jrlSettings.xml'));
 

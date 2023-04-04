@@ -16,6 +16,8 @@ clear;
 import org.opensim.modeling.*;
 
 
+% setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_CP.xml');
+% setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_CP_reducedTorso.xml');
 setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD.xml');
 setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD_reducedTorso.xml');
 % setupIKfile = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
@@ -23,13 +25,15 @@ setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD_reducedT
 setupIDfile = fullfile(pwd, 'SetupFiles', 'Settings_ID.xml');
 setupSOfile = fullfile(pwd, 'SetupFiles', 'Settings_SO.xml');
 setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL.xml');
+% setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL_with_MuscleDirection.xml');
 
 % Options for steps which should be run
 b_runIK = 1;
-b_checkMuscleMomentArms = 1; b_skipTrialIfMomentArmsWrong = 1;
+b_checkMuscleMomentArms = 1; 
+b_skipTrialIfMomentArmsWrong = 1;
 b_runID = 1;
-b_runSO = 0;
-b_runJRL = 0;
+b_runSO = 1;
+b_runJRL = 1;
 
 disp('Select the root output folder');
 rootOutput = uigetdir(pwd, 'Select the root output folder');
