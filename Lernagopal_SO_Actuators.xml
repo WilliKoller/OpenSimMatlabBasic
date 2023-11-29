@@ -89,6 +89,66 @@
 				<axis>      -0.00000000      -0.00000000       1.00000000 </axis>
 			<optimal_force> 80.00000000 </optimal_force>
 			</TorqueActuator>
+			<CoordinateActuator name="pelvis_tilt_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>pelvis_tilt</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="pelvis_list_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>pelvis_list</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="pelvis_rotation_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>pelvis_rotation</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="pelvis_tx_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>pelvis_tx</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="pelvis_ty_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>pelvis_ty</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="pelvis_tz_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>pelvis_tz</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
+			</CoordinateActuator>
 			<CoordinateActuator name="hip_flexion_r_reserve">
 				<isDisabled> false </isDisabled>
 				<!--Minimum allowed value for control signal. Used primarily when solving
@@ -134,15 +194,44 @@
 				<optimal_force>       1.00000000 </optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="knee_adduction_r_reserve">
-				<isDisabled> false </isDisabled>
-				<!--Minimum allowed value for control signal. Used primarily when solving
-				    for control values-->
-				<min_control> -infinity </min_control>
-				<!--Maximum allowed value for control signal. Used primarily when solving
-				    for control values-->
-				<max_control> infinity </max_control>
-			<coordinate> knee_adduction_r </coordinate>
-				<optimal_force>       1.00000000 </optimal_force>
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>knee_adduction_r</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>100</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="med_cond_adduction_r_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>med_cond_adduction_r</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>100</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="lat_cond_adduction_r_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>lat_cond_adduction_r</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>100</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="patella_r_constrained_knee_angle_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>patella_r_constrained_knee_angle</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="ankle_angle_r_reserve">
 				<isDisabled> false </isDisabled>
@@ -222,15 +311,44 @@
 				<optimal_force>       1.00000000 </optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="knee_adduction_l_reserve">
-				<isDisabled> false </isDisabled>
-				<!--Minimum allowed value for control signal. Used primarily when solving
-				    for control values-->
-				<min_control> -infinity </min_control>
-				<!--Maximum allowed value for control signal. Used primarily when solving
-				    for control values-->
-				<max_control> infinity </max_control>
-			<coordinate> knee_adduction_l </coordinate>
-				<optimal_force>       1.00000000 </optimal_force>
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>knee_adduction_l</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>100</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="med_cond_adduction_l_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>med_cond_adduction_l</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>100</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="lat_cond_adduction_l_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>lat_cond_adduction_l</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>100</optimal_force>
+			</CoordinateActuator>
+			<CoordinateActuator name="patella_l_constrained_knee_angle_reserve">
+				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
+				<min_control>-Inf</min_control>
+				<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
+				<max_control>Inf</max_control>
+				<!--Name of the generalized coordinate to which the actuator applies.-->
+				<coordinate>patella_l_constrained_knee_angle</coordinate>
+				<!--The maximum generalized force produced by this actuator.-->
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="ankle_angle_l_reserve">
 				<isDisabled> false </isDisabled>
