@@ -16,23 +16,24 @@ clear;
 import org.opensim.modeling.*;
 
 
-% setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_CP.xml');
-% setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_CP_reducedTorso.xml');
-setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD.xml');
-setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD_reducedTorso.xml');
+setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_CP.xml');
+setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_CP_reducedTorso.xml');
+% setupIKfile = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD.xml');
+% setupIK_reducedTorso_file = fullfile(pwd, 'SetupFiles', 'setupIK_DEM_TD_reducedTorso.xml');
 % setupIKfile = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
 % setupIK_reducedTorso_file = 'C:\Users\Willi\ucloud\ProjekteAbteilung\Climbing\OpenSimSetup\ik_setup4.xml';
 setupIDfile = fullfile(pwd, 'SetupFiles', 'Settings_ID.xml');
 setupSOfile = fullfile(pwd, 'SetupFiles', 'Settings_SO.xml');
-setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL.xml');
-% setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL_with_MuscleDirection.xml');
+% setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL.xml');
+setupJRLfile = fullfile(pwd, 'SetupFiles', 'Settings_JRL_inFemurL_with_MuscleDirection_BodyKinematics.xml');
+setupJRL2file = fullfile(pwd, 'SetupFiles', 'Settings_JRL_inFemurR_with_MuscleDirection_BodyKinematics.xml');
 
 % Options for steps which should be run
 b_runIK = 1;
-b_checkMuscleMomentArms = 1; 
-b_skipTrialIfMomentArmsWrong = 1;
-b_runID = 1;
-b_runSO = 1;
+b_checkMuscleMomentArms = 0; 
+b_skipTrialIfMomentArmsWrong = 0;
+b_runID = 0;
+b_runSO = 0;
 b_runJRL = 1;
 
 disp('Select the root output folder');
@@ -174,6 +175,12 @@ for trialIndex = 1 : size(trialsFileNames, 2)
                 disp('Estimating Joint Contact Forces ... ');
                 so_forcesFile = fullfile(outputPath, 'SO', '_StaticOptimization_force.sto');
                 runJRL(setupJRLfile, actuatorfile, modelFile, motionFile, grfSetupFile, so_forcesFile, startTime, endTime, fullfile(outputPath, 'JRL'));
+                if isfile(setupJRL2file)
+                    copyfile(fullfile(outputPath, 'JRL', '_JointReaction_ReactionLoads.sto'), fullfile(outputPath, 'JRL', 'inFemurL_JointReaction_ReactionLoads.sto'));
+                    runJRL(setupJRL2file, actuatorfile, modelFile, motionFile, grfSetupFile, so_forcesFile, startTime, endTime, fullfile(outputPath, 'JRL'));
+                    copyfile(fullfile(outputPath, 'JRL', '_JointReaction_ReactionLoads.sto'), fullfile(outputPath, 'JRL', 'inFemurR_JointReaction_ReactionLoads.sto'));
+                    delete(fullfile(outputPath, 'JRL', '_JointReaction_ReactionLoads.sto'));
+                end
             end
             
             disp(['Finished model "' modelsFileNames{modelIndex} '" and trial "' trialsFileNames{trialIndex} '"']);

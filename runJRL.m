@@ -38,6 +38,12 @@ if contains(lower(setupFile), 'muscledirection')
     muscle_force_direction.setEndTime(endTime);
 end
 
+if contains(lower(setupFile), 'bodykinematics')
+    body_kinematics = BodyKinematics.safeDownCast(analysisSet.get(2));
+    body_kinematics.setStartTime(startTime);
+    body_kinematics.setEndTime(endTime);
+end
+
 jrlTool.print(fullfile(outputPath, 'jrlSettings.xml'));
 
 runTool = AnalyzeTool(fullfile(outputPath, 'jrlSettings.xml'));
