@@ -87,21 +87,53 @@ while(momentArmsAreWrong)
                     for j = 1 : currBody.getWrapObjectSet.getSize
                         if strcmp(currBody.getWrapObjectSet.get(j-1).getName, wrapObjName)
                             wrapObject = currBody.getWrapObjectSet.get(j-1);
-                            wrapCylinder = WrapCylinder.safeDownCast(wrapObject);
-                            radius = wrapCylinder.get_radius;
-                            if radius - stepSize > 0
-                                wrapCylinder.set_radius(radius - stepSize)
-                                model.print(newModelFilename);
-                                disp([char(wrapObjName) ': radius decreased to ' num2str(radius - stepSize)]);
-                                wrapObjectsModified{end+1} = char(wrapObjName);
-                                wrapObjectsOrigRadius(end+1) = radius;
-                                wrapObjectsModifiedRadius(end+1) = radius - stepSize;
-                                madeModifications = 1;
-                                break;
-                            else
-                                disp([muscleName ' moment arm wrong but wrap object is already too small! Check manually']);
-                                failed = 1;
-                                momentArmsAreWrong = 0;
+                            try
+                                wrapCylinder = WrapCylinder.safeDownCast(wrapObject);
+                                radius = wrapCylinder.get_radius;
+                                if radius - stepSize > 0
+                                    wrapCylinder.set_radius(radius - stepSize)
+                                    model.print(newModelFilename);
+                                    disp([char(wrapObjName) ': radius decreased to ' num2str(radius - stepSize)]);
+                                    wrapObjectsModified{end+1} = char(wrapObjName);
+                                    wrapObjectsOrigRadius(end+1) = radius;
+                                    wrapObjectsModifiedRadius(end+1) = radius - stepSize;
+                                    madeModifications = 1;
+                                    break;
+                                else
+                                    disp([muscleName ' moment arm wrong but wrap object is already too small! Check manually']);
+                                    failed = 1;
+                                    momentArmsAreWrong = 0;
+                                end
+                            catch
+                                wrapEllipsoid = WrapEllipsoid.safeDownCast(wrapObject);
+                                dimensionsString = wrapEllipsoid.getDimensionsString;
+                                dimensions = strsplit(char(dimensionsString), ' ');
+                                newDimension(1) = str2double(dimensions(2))-stepSize;
+                                newDimension(2) = str2double(dimensions(3))-stepSize;
+                                newDimension(3) = str2double(dimensions(4))-stepSize;
+                                if sum(newDimension > 0) == 3
+                                    newDimensionString = [num2str(newDimension(1)) ...
+                                        ' ' num2str(newDimension(2)) ' ' num2str(newDimension(3))];
+                                    
+                                    %replace dimensions string - no API
+                                    %exists to do this in OpenSim 4.0
+                                    fid  = fopen(newModelFilename,'r');
+                                    f=fread(fid,'*char')';
+                                    fclose(fid);
+                                    indexStartOfWO = strfind(f, ['name="' char(wrapObjName)]);
+                                    indexDimensionString_0 = strfind(f(indexStartOfWO:end), '<dimensions>');
+                                    indexDimensionString_1 = strfind(f(indexStartOfWO:end), '</dimensions>');
+                                    indexDimensionString_0 = indexStartOfWO + indexDimensionString_0(1);
+                                    indexDimensionString_1 = indexStartOfWO + indexDimensionString_1(1);
+                                    newF = [f(1 : indexDimensionString_0 + 10) newDimensionString f(indexDimensionString_1 - 2 : end)];
+                                    fid  = fopen(newModelFilename,'w');
+                                    fprintf(fid,'%s',newF);
+                                    fclose(fid);
+                                else
+                                    disp([muscleName ' moment arm wrong but wrap object is already too small! Check manually']);
+                                    failed = 1;
+                                    momentArmsAreWrong = 0;
+                                end
                             end
                         end
                     end
