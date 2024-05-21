@@ -1,42 +1,45 @@
-function [momentArmsAreWrong, momentArms, discontinuities, muscleNames, coordinateNames] = calcMuscleMomentArmsForMotion(modelFilename, motionFilenames, coordinateNames, muscleFilter, threshold, verbose, plotMomentArms)
+function [momentArmsAreWrong, momentArms, discontinuities, muscleNames, coordinateNames] = calcMuscleMomentArmsForMotion(modelFilename, motionFilenames, coordinateNames, muscleFilter, threshold, verbose, plotMomentArms, filterFrequency)
 %CHECKMUSCLEMOMENTARM Computes moment arms of desired muscles around joints
 %   and checks for smoothness of those during the motion
-% modelFilename: 
+% modelFilename:
 %   provide osim model
-% motionFilenames: 
+% motionFilenames:
 %   provide motions (.mot file) for this model (e.g. results of inverse kinematics)
-% coordinateNames: 
+% coordinateNames:
 %   provide joint names that should be moved into motion position
 %   moment arms will be calculated around these joints
-% muscleFilter: 
+% muscleFilter:
 %   provide texts that will be used as a filter - only muscles including
 %   these texts will be checked
-% threshold: 
+% threshold:
 %   this is the threshold to detect discontinuities
 %   set this as desired - default is 0.004
-% verbose: 
+% verbose:
 %   0 or 1 wheter to write output to command window
-% plotMomentArms: 
+% plotMomentArms:
 %   0 or 1 (default) to indicate wheter moment arms should be plotted
-% 
+% filterFrequency:
+%   frequency of iir filter applied to motion. non-positive values will be
+%   ignored
+%
 % RETURN VALUES
-% momentArmsAreWrong: 
+% momentArmsAreWrong:
 %   0 or 1 to indicate wheter moment arms have discontinuities
-% momentArms: 
-%   cell array of moment arms for each motion - each element contains 
+% momentArms:
+%   cell array of moment arms for each motion - each element contains
 %   array of momemt arms for respective input
 %       dim 1: frames
 %       dim 2: muscle number (to get the name use muscleNames variable)
 %       dim 3: coordinate number (to get the name use coordinateNames variable)
-% discontinuities: 
-%   cell array of moment arms for each motion - each element contains 
+% discontinuities:
+%   cell array of moment arms for each motion - each element contains
 %   array of discontinuities for respective input
 %       dim 1: frame
 %       dim 2: muscle number (to get the name use muscleNames variable)
 %       dim 3: coordinate number (to get the name use coordinateNames variable)
-% muscleNames: 
+% muscleNames:
 %   cell array of muscle names
-% coordinateNames: 
+% coordinateNames:
 %   cell array of coordinate names
 
 import org.opensim.modeling.*
@@ -58,8 +61,10 @@ end
 if ~exist('plotMomentArms', 'var')
     plotMomentArms = 1;
 end
+if ~exist('filterFrequency', 'var')
+    filterFrequency = 0;
+end
 
-tic
 model = Model(modelFilename);
 
 model.initSystem();
@@ -93,8 +98,24 @@ momentArmsAreWrong = 0;
 momentArms = cell(1, numel(motionFilenames));
 discontinuities = cell(1, numel(motionFilenames));
 for u = 1 : numel(motionFilenames)
+    tic;
     motion = Storage(motionFilenames{u});
     disp(['Checking motion ' motionFilenames{u}]);
+
+    tmpArr = strsplit(motionFilenames{u}, filesep);
+    tmpSettingsFile = '';
+    for t = 1 : numel(tmpArr) - 3
+        tmpSettingsFile = fullfile(tmpSettingsFile, tmpArr(t));
+    end
+    load(fullfile(tmpSettingsFile{1}, 'settings.mat'), 'preframes', 'frequency');
+
+    if preframes > 0
+        motion.crop(motion.getFirstTime() + preframes/frequency, motion.getLastTime());
+    end
+
+    if filterFrequency > 0
+        motion.lowpassIIR(filterFrequency)
+    end
 
     momentArmsCurrMotion = zeros(motion.getSize(), length(muscleIndices), numel(coordinateNames));
     for frame = 1:motion.getSize()
@@ -164,7 +185,7 @@ for u = 1 : numel(motionFilenames)
             hold on;
             legendArr = {};
             for m = 1 : numel(muscleHandles)
-                if abs(sum(momentArmsCurrMotion(:, m, i))) > 1e-5
+                if abs(nansum(momentArmsCurrMotion(:, m, i))) > 1e-5
                     plot(momentArmsCurrMotion(:, m, i));
                     legendArr{end+1} = muscleNames{m};
                 end
@@ -182,7 +203,18 @@ for u = 1 : numel(motionFilenames)
                     end
                 end
             end
-            legend(legendArr, 'Interpreter', 'none', 'Location', 'best');
+            if size(discontinuitiesCurrMotion, 1) > 0
+                musclesWithDiscont = unique(discontinuitiesCurrMotion(:, 2));
+                muscleNamesWithDisc = muscleNames(musclesWithDiscont);
+                legendArr(~contains(legendArr, muscleNamesWithDisc)) = '';
+                if size(legendArr, 2) == 0
+                    legend off;
+                else
+                    legend(legendArr, 'Interpreter', 'none', 'Location', 'best');
+                end
+            else
+                legend off;
+            end
         end
         drawnow;
     end
