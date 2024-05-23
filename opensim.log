@@ -1,0 +1,26 @@
+[2024-01-15 12:38:47.597] [info] Loaded model Rajagopal-generic-scaled from file C:\Users\willi\Desktop\Katya\p03_tps_transformed_skin_updated.osim
+[2024-01-15 12:38:47.599] [warning] Couldn't find file 'model_update\tps_warping_results\r_pelvis.stl'.
+[2024-01-15 12:38:47.599] [warning] Couldn't find file 'model_update\tps_warping_results\l_pelvis.stl'.
+[2024-01-15 12:38:47.600] [warning] Couldn't find file 'model_update\tps_warping_results\sacrum.stl'.
+[2024-01-15 12:38:47.600] [warning] Couldn't find file 'model_update\tps_warping_results\femur_r.stl'.
+[2024-01-15 12:38:47.600] [warning] Couldn't find file 'model_update\tps_warping_results\tibia_r.stl'.
+[2024-01-15 12:38:47.601] [warning] Couldn't find file 'model_update\tps_warping_results\fibula_r.stl'.
+[2024-01-15 12:38:47.602] [warning] Couldn't find file 'model_update\tps_warping_results\patella_r.stl'.
+[2024-01-15 12:38:47.604] [warning] Couldn't find file 'model_update\tps_warping_results\femur_l.stl'.
+[2024-01-15 12:38:47.604] [warning] Couldn't find file 'model_update\tps_warping_results\tibia_l.stl'.
+[2024-01-15 12:38:47.604] [warning] Couldn't find file 'model_update\tps_warping_results\fibula_l.stl'.
+[2024-01-15 12:38:47.605] [warning] Couldn't find file 'model_update\tps_warping_results\patella_l.stl'.
+[2024-01-15 12:38:49.257] [info] Loaded model Rajagopal-generic-scaled from file C:\Users\willi\Desktop\Katya\p03_tps_transformed_skin_updated_final.osim
+[2024-01-15 12:38:49.260] [warning] Couldn't find file 'model_update\tps_warping_results\r_pelvis.stl'.
+[2024-01-15 12:38:49.261] [warning] Couldn't find file 'model_update\tps_warping_results\l_pelvis.stl'.
+[2024-01-15 12:38:49.261] [warning] Couldn't find file 'model_update\tps_warping_results\sacrum.stl'.
+[2024-01-15 12:38:49.262] [warning] Couldn't find file 'model_update\tps_warping_results\femur_r.stl'.
+[2024-01-15 12:38:49.262] [warning] Couldn't find file 'model_update\tps_warping_results\tibia_r.stl'.
+[2024-01-15 12:38:49.262] [warning] Couldn't find file 'model_update\tps_warping_results\fibula_r.stl'.
+[2024-01-15 12:38:49.263] [warning] Couldn't find file 'model_update\tps_warping_results\patella_r.stl'.
+[2024-01-15 12:38:49.264] [warning] Couldn't find file 'model_update\tps_warping_results\femur_l.stl'.
+[2024-01-15 12:38:49.265] [warning] Couldn't find file 'model_update\tps_warping_results\tibia_l.stl'.
+[2024-01-15 12:38:49.265] [warning] Couldn't find file 'model_update\tps_warping_results\fibula_l.stl'.
+[2024-01-15 12:38:49.266] [warning] Couldn't find file 'model_update\tps_warping_results\patella_l.stl'.
+[2024-03-04 16:17:40.209] [info] Loaded model 2D_gait-scaled from file C:\Users\willi\ucloud\PhD\StanfordWorkshop\P04_pre.osim
+[2024-03-04 16:17:40.605] [info] Loaded model 2D_gait-scaled from file C:\Users\willi\ucloud\PhD\StanfordWorkshop\P04_pre_final.osim

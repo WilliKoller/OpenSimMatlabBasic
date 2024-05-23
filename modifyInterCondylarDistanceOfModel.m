@@ -48,6 +48,12 @@ baseTranslation = medCondFrame.get_translation;
 baseTranslation.set(2, -leftDistance/2);
 medCondFrame.set_translation(baseTranslation)
 
+% Lat_Cond_l_Constraint
+latCondConstraint = WeldConstraint.safeDownCast(osimModel.getConstraintSet().get('Lat_Cond_l_Constraint'));
+latCondOffsetFrame = PhysicalOffsetFrame.safeDownCast(latCondConstraint.get_frames(0));
+baseTranslation = latCondOffsetFrame.get_translation;
+baseTranslation.set(2, leftDistance/2);
+latCondOffsetFrame.set_translation(baseTranslation)
 
 
 %% right
@@ -90,6 +96,16 @@ baseTranslation = medCondFrame.get_translation;
 baseTranslation.set(2, rightDistance/2);
 medCondFrame.set_translation(baseTranslation)
 
+% Lat_Cond_r_Constraint
+latCondConstraint = WeldConstraint.safeDownCast(osimModel.getConstraintSet().get('Lat_Cond_r_Constraint'));
+latCondOffsetFrame = PhysicalOffsetFrame.safeDownCast(latCondConstraint.get_frames(0));
+baseTranslation = latCondOffsetFrame.get_translation;
+baseTranslation.set(2, -rightDistance/2);
+latCondOffsetFrame.set_translation(baseTranslation)
+
 
 newModelName = strrep(modelFileName, '.osim', '_adjCond.osim');
-osimModel.print(fullfile(path, newModelName))
+name = osimModel.getName;
+osimModel.setName([char(name) '_adjCond']);
+osimModel.print(fullfile(path, newModelName));
+disp(['Intercondyle distances adjusted and model saved as ' newModelName]);
