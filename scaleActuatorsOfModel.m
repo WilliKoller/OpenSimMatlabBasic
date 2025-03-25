@@ -11,7 +11,7 @@ scaled_mass = model_mass;
 % generic_mass = 75.1646; % gait2392
 generic_mass = 75.337; % Lernagopal / Rajagopal
 scale_factor = (scaled_mass / generic_mass) ^ (2 / 3);
-scale_factor = 1%2;
+% scale_factor = 1%2;
 
 [~, fileName, ~] = fileparts(modelFileName);
 newModelName = fullfile(path, [fileName '_final.osim']);
