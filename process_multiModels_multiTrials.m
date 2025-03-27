@@ -37,6 +37,10 @@ b_runID = 1;
 b_runSO = 1;
 b_runJRL = 1;
 
+% enable logging to command window
+Logger.setLevelString('Info');
+Logger.addSink(JavaLogSink());
+
 %%
 disp('Select the root output folder');
 rootOutput = uigetdir(pwd, 'Select the root output folder');
