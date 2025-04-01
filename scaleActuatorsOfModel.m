@@ -78,7 +78,7 @@ function strengthScaler(scaleFactor, Model_In, Model_Out)
 
 import org.opensim.modeling.*
 
-error(nargchk(1, 3, nargin));
+narginchk(1, 3);
 
 if nargin < 2
     [Model_In, path] = uigetfile('.osim');
